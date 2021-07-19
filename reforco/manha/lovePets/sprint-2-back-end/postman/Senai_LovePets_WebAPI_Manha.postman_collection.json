@@ -11,6 +11,16 @@
 				{
 					"name": "Atendimentos.ListarTodos",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbUBhZG0uY29tIiwianRpIjoiMSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IjEiLCJyb2xlIjoiMSIsImV4cCI6MTYyNjY5NTg0OSwiaXNzIjoibG92ZVBldHMud2ViQXBpIiwiYXVkIjoibG92ZVBldHMud2ViQXBpIn0.kUi3sIaqOD5uV3bzpwumLIACYBtzfWJ8X8Mk_Pqalqo",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -23,6 +33,27 @@
 							"path": [
 								"api",
 								"atendimentos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atendimentos.BuscarPorId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/atendimentos/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"atendimentos",
+								"3"
 							]
 						}
 					},
@@ -138,12 +169,22 @@
 					"response": []
 				},
 				{
-					"name": "Atendimentos.BuscarPorId",
+					"name": "Atendimentos.ListarMeus",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp1bmlvckBlbWFpbC5jb20iLCJqdGkiOiI0IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiMyIsInJvbGUiOiIzIiwiZXhwIjoxNjI2Njk3MTY2LCJpc3MiOiJsb3ZlUGV0cy53ZWJBcGkiLCJhdWQiOiJsb3ZlUGV0cy53ZWJBcGkifQ.sN58IHQK5J81IlNoBcTxSDIOJhzO0ztlvEJA766bNLA",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:5000/api/atendimentos/3",
+							"raw": "http://localhost:5000/api/atendimentos/meus",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -152,7 +193,41 @@
 							"path": [
 								"api",
 								"atendimentos",
-								"3"
+								"meus"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"junior@email.com\",\r\n    \"senha\" : \"junior123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"login"
 							]
 						}
 					},

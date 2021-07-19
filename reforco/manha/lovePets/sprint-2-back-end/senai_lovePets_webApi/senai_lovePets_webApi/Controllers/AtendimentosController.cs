@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using senai_lovePets_webApi.Domains;
 using senai_lovePets_webApi.Interfaces;
 using senai_lovePets_webApi.Repositories;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -26,6 +28,7 @@ namespace senai_lovePets_webApi.Controllers
         /// Lista todos os atendimentos
         /// </summary>
         /// <returns>Um status code 200 - Ok com o conteúdo da lista</returns>
+        [Authorize(Roles = "1")]
         [HttpGet]
         public IActionResult ListarTodos()
         {
@@ -44,6 +47,7 @@ namespace senai_lovePets_webApi.Controllers
         /// </summary>
         /// <param name="idAtendimento">ID do atendimento que será buscado</param>
         /// <returns>Um atendimento encontrado com o status code 200 - Ok</returns>
+        [Authorize(Roles = "1")]
         [HttpGet("{idAtendimento}")]
         public IActionResult BuscarPorId(int idAtendimento)
         {
@@ -62,6 +66,7 @@ namespace senai_lovePets_webApi.Controllers
         /// </summary>
         /// <param name="novoAtendimento">Objeto com as novas informações</param>
         /// <returns>Um status code 201 - Created</returns>
+        [Authorize(Roles = "1")]
         [HttpPost]
         public IActionResult Cadastrar(Atendimento novoAtendimento)
         {
@@ -83,6 +88,7 @@ namespace senai_lovePets_webApi.Controllers
         /// <param name="idAtendimento">ID do atendimento que será atualizado</param>
         /// <param name="atendimentoAtualizado">Objeto com as novas informações</param>
         /// <returns>Um status code 204 - No Content</returns>
+        [Authorize(Roles = "1")]
         [HttpPut("{idAtendimento}")]
         public IActionResult Atualizar(int idAtendimento, Atendimento atendimentoAtualizado)
         {
@@ -103,6 +109,7 @@ namespace senai_lovePets_webApi.Controllers
         /// </summary>
         /// <param name="idAtendimento">ID do atendimento que será deletado</param>
         /// <returns>Um status code 204 - No Content</returns>
+        [Authorize(Roles = "1")]
         [HttpDelete("{idAtendimento}")]
         public IActionResult Deletar(int idAtendimento)
         {
@@ -122,6 +129,7 @@ namespace senai_lovePets_webApi.Controllers
         /// Altera o status de um determinado atendimento
         /// </summary>
         /// <returns>Um status code 204 - No Content</returns>
+        [Authorize(Roles = "1")]
         [HttpPatch]
         public IActionResult AlterarSituacao(Atendimento atendimento)
         {
@@ -130,6 +138,22 @@ namespace senai_lovePets_webApi.Controllers
                 _atendimentoRepository.AlterarSituacao(atendimento.IdAtendimento, atendimento.IdSituacao);
 
                 return NoContent();
+            }
+            catch (Exception erro)
+            {
+                return BadRequest(erro);
+            }
+        }
+
+        [Authorize("2, 3")]
+        [HttpGet("meus")]
+        public IActionResult ListarMeus()
+        {
+            try
+            {
+                int idUsuario = Convert.ToInt32(HttpContext.User.Claims.First(c => c.Type == JwtRegisteredClaimNames.Jti).Value);
+
+                return Ok(_atendimentoRepository.ListarMeus(idUsuario));
             }
             catch (Exception erro)
             {

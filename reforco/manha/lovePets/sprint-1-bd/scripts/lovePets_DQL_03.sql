@@ -63,3 +63,11 @@ ON TP.idTipoPet = R.idTipoPet;
 UPDATE atendimento 
 SET idSituacao = 3
 WHERE idAtendimento = 3;
+
+-- string Email, string Senha
+
+SELECT * FROM usuario
+WHERE email = 'saulo@email.com' AND senha = 'saulo123';
+
+SELECT * FROM atendimento
+WHERE idVeterinario = 1
